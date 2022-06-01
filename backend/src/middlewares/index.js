@@ -1,0 +1,1 @@
+exports.languageMiddleware = require("./language");

@@ -1,0 +1,1 @@
+exports.responseMesssages = require("./responseMessages");
