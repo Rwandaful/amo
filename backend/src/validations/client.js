@@ -1,4 +1,4 @@
-const Joi = require("joi");
+const Joi = require('joi');
 const client = Joi.object({
   name: Joi.string().required(),
   phone: Joi.string(),
@@ -11,3 +11,4 @@ const client = Joi.object({
   hostelRoom: Joi.string(),
 });
 module.exports = { client };
+

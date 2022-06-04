@@ -1,1 +1,2 @@
-exports.responseMesssages = require("./responseMessages");
+exports.responseMessages = require('./responseMessages');
+

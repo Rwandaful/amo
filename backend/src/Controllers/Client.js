@@ -1,6 +1,5 @@
-const { request } = require("http");
-const { Client, ClientBalance } = require("../database/models");
-const { responseMessages } = require("../constants");
+const { Client, ClientBalance } = require('../database/models');
+const { responseMessages } = require('../constants');
 
 class ClientController {
   static async createClient(request, response) {
@@ -27,13 +26,16 @@ class ClientController {
         hostelRoom,
         regno,
       });
+      const clientBalance = await ClientBalance.create({ clientId: user.id });
       return response.status(200).json({
-        message: responseMessages["SUCCESS"][request.language],
+        message: responseMessages['SUCCESS'][request.language],
         user,
+        clientBalance,
       });
     } catch (error) {
+      console.log(error);
       return response.status(500).json({
-        message: responseMessages["INTERNAL_SERVER_ERROR"][request.language],
+        message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
       });
     }
   }
@@ -55,7 +57,7 @@ class ClientController {
       const client = await Client.findOne({ id: clientId });
       if (!client) {
         return response.status(404).json({
-          message: responseMessages["NOT_FOUND"][request.language],
+          message: responseMessages['NOT_FOUND'][request.language],
         });
       }
       if (name) client.name = name;
@@ -70,12 +72,12 @@ class ClientController {
       await client.save();
 
       return response.status(200).json({
-        message: responseMessages["SUCCESS"][request.language],
-        user,
+        message: responseMessages['SUCCESS'][request.language],
+        client,
       });
     } catch (error) {
       return response.status(500).json({
-        message: responseMessages["INTERNAL_SERVER_ERROR"][request.language],
+        message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
       });
     }
   }
@@ -85,51 +87,40 @@ class ClientController {
       const client = await Client.destroy({ where: { id: clientId } });
 
       return response.status(200).json({
-        message: responseMessages["SUCCESS"][request.language],
-        user,
+        message: responseMessages['SUCCESS'][request.language],
+        client,
       });
     } catch (error) {
       return response.status(500).json({
-        message: responseMessages["INTERNAL_SERVER_ERROR"][request.language],
+        message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
       });
     }
   }
 
-  static async addBalance(request, response) {
-    try {
-      const { clientId } = request.params;
-      const { amount } = request.body;
-      const client = await Client.findOne({ id: clientId });
-      if (!client) {
-        return response.status(404).json({
-          message: responseMessages["NOT_FOUND"][request.language],
-        });
-      }
-      const balance = await ClientBalance.create({
-        clientId,
-        amount,
-      });
-      return response.status(200).json({
-        message: responseMessages["SUCCESS"][request.language],
-        user,
-      });
-    } catch (error) {
-      return response.status(500).json({
-        message: responseMessages["INTERNAL_SERVER_ERROR"][request.language],
-      });
-    }
-  }
-  static async signin(request, response) {
-    try {
-      const { email, password } = request.body;
-      return response.status(200).json({
-        message: "Umukiriya yandishijwe neza!.",
-      });
-    } catch (error) {
-      return response.status(500).json({
-        message: "Habaye ikibazo.",
-      });
-    }
-  }
+  // static async addBalance(request, response) {
+  //   try {
+  //     const { clientId } = request.params;
+  //     const { amount } = request.body;
+  //     const client = await Client.findOne({ id: clientId });
+  //     if (!client) {
+  //       return response.status(404).json({
+  //         message: responseMessages['NOT_FOUND'][request.language],
+  //       });
+  //     }
+  //     const balance = await ClientBalance.create({
+  //       clientId,
+  //       amount,
+  //     });
+  //     return response.status(200).json({
+  //       message: responseMessages['SUCCESS'][request.language],
+  //       user,
+  //     });
+  //   } catch (error) {
+  //     return response.status(500).json({
+  //       message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
+  //     });
+  //   }
+  // }
 }
 module.exports = ClientController;
+
