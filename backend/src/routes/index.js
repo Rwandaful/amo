@@ -1,7 +1,7 @@
 const express = require('express');
 const { VERSION } = require('../config');
 const { languageMiddleware } = require('../middlewares');
-const { responseMessages } = require('../utils/constants');
+const { responseMessages } = require('../constants');
 const router = express.Router();
 router.get('/api', (request, response) => {
   return response.status(200).json({

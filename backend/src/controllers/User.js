@@ -1,5 +1,5 @@
 const { User } = require('../database/models');
-const { responseMessages } = require('../utils/constants');
+const { responseMessages } = require('../utils');
 
 class UserController {
   static async createUser(request, response) {
@@ -38,10 +38,11 @@ class UserController {
     try {
       const { email, password } = request.body;
       const user = await User.findOne({ email });
-      if (user)
+      if (!user)
         return response.status(400).json({
           message: responseMessages['BAD_REQUEST'][request.language],
         });
+      if (user.comparePassword(password)) jwt;
 
       return response.status(200).json({
         message: 'Umukiriya yandishijwe neza!.',

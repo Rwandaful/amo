@@ -1,7 +1,7 @@
-const { ClientController } = require('../../../../Controllers');
+const { ClientController } = require('../../../../controllers');
 const joiValidator = require('../../../../middlewares/joiValidator');
-const { client } = require('../../../../validations/client');
-
+const { multerUploader } = require('../../../../utils/imageUploader');
+const { clientValidationSchema } = require('../../../../validations/client');
 const router = require('express').Router();
 /**
  * @openapi
@@ -51,6 +51,11 @@ const router = require('express').Router();
  *          '201':
  *              description: The resources created
  */
-router.post('/', joiValidator(client), ClientController.createClient);
+router.post(
+  '/',
+  multerUploader.single('profilePicture'),
+  joiValidator(clientValidationSchema),
+  ClientController.createClient
+);
 module.exports = router;
 
