@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { VERSION } = require('../../../config');
 const userRoutes = require('./user');
 const clientRoutes = require('./client');
-const client = require('../../../database/models/client');
+const pricingRoutes = require('./pricing');
 /**
  * @openapi
  *  /:
@@ -19,5 +19,6 @@ router.get('/', (request, response) => {
 });
 router.use('/users', userRoutes);
 router.use('/clients', clientRoutes);
+router.use('/pricings', pricingRoutes);
 module.exports = router;
 

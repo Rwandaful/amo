@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate() {
       // define association here
+      this.hasOne(sequelize.models.ClientBalance, {
+        foreignKey: 'clientId',
+        as: 'clientBalance',
+      });
+      this.hasMany(sequelize.models.ClientHistory, {
+        foreignKey: 'clientId',
+        as: 'clientHistory',
+      });
     }
   }
   Client.init(

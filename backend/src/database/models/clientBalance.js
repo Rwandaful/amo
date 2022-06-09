@@ -9,13 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate() {
       // define association here
+      this.belongsTo(sequelize.models.Client, { foreignKey: 'clientId' });
     }
   }
   clientBalance.init(
     {
-      clientId: DataTypes.NUMBER,
-      type: DataTypes.STRING,
-      amount: DataTypes.NUMBER,
+      amount: DataTypes.INTEGER,
     },
     {
       sequelize,

@@ -27,7 +27,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('clientBalances');
+    await queryInterface.dropTable('client_balances');
   },
 };
 

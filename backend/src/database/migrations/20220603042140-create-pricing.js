@@ -14,7 +14,7 @@ module.exports = {
       about: {
         type: Sequelize.STRING,
       },
-      mealPricing: {
+      price: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

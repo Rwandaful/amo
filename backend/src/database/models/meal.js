@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   Meal.init(
     {
       clientId: {
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         allowNull: true,
       },
       mealPricing: {

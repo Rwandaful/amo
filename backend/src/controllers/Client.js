@@ -1,36 +1,14 @@
-const { Client, ClientBalance } = require('../database/models');
+const { Client, sequelize } = require('../database/models');
 const { responseMessages } = require('../constants');
 
 class ClientController {
   static async createClient(request, response) {
     try {
-      const {
-        name,
-        phone,
-        email,
-        college,
-        regno,
-        department,
-        hostelName,
-        hostelBlock,
-        hostelRoom,
-      } = request.body;
-      const user = await Client.create({
-        name,
-        phone,
-        email,
-        college,
-        department,
-        hostelName,
-        hostelBlock,
-        hostelRoom,
-        regno,
-      });
-      const clientBalance = await ClientBalance.create({ clientId: user.id });
+      const client = await Client.create(request.body);
+      await client.createClientBalance({ amount: 0 });
       return response.status(200).json({
         message: responseMessages['SUCCESS'][request.language],
-        user,
-        clientBalance,
+        client,
       });
     } catch (error) {
       console.log(error);
@@ -54,7 +32,7 @@ class ClientController {
         hostelRoom,
       } = request.body;
       const { clientId } = request.params;
-      const client = await Client.findOne({ id: clientId });
+      const client = await Client.findOne({ where: { id: clientId } });
       if (!client) {
         return response.status(404).json({
           message: responseMessages['NOT_FOUND'][request.language],
@@ -76,8 +54,8 @@ class ClientController {
         client,
       });
     } catch (error) {
-      return response.status(500).json({
-        message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
+      return response.status(400).json({
+        message: responseMessages['BAD_REQUEST'][request.language],
       });
     }
   }
@@ -96,31 +74,87 @@ class ClientController {
       });
     }
   }
+  static async getAllClients(request, response) {
+    try {
+      const clients = await Client.findAll();
 
-  // static async addBalance(request, response) {
-  //   try {
-  //     const { clientId } = request.params;
-  //     const { amount } = request.body;
-  //     const client = await Client.findOne({ id: clientId });
-  //     if (!client) {
-  //       return response.status(404).json({
-  //         message: responseMessages['NOT_FOUND'][request.language],
-  //       });
-  //     }
-  //     const balance = await ClientBalance.create({
-  //       clientId,
-  //       amount,
-  //     });
-  //     return response.status(200).json({
-  //       message: responseMessages['SUCCESS'][request.language],
-  //       user,
-  //     });
-  //   } catch (error) {
-  //     return response.status(500).json({
-  //       message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
-  //     });
-  //   }
-  // }
+      return response.status(200).json({
+        message: responseMessages['SUCCESS'][request.language],
+        clients,
+      });
+    } catch (error) {
+      return response.status(500).json({
+        message: responseMessages['INTERNAL_SERVER_ERROR'][request.language],
+      });
+    }
+  }
+
+  static async getClientById(request, response) {
+    try {
+      const { clientId } = request.params;
+      const client = await Client.findOne({
+        where: { id: clientId },
+        include: 'clientBalance',
+      });
+      if (!client)
+        response.status(404).json({
+          message: responseMessages['NOT_FOUND'][request.language],
+        });
+      return response.status(200).json({
+        message: responseMessages['SUCCESS'][request.language],
+        client,
+      });
+    } catch (error) {
+      return response.status(400).json({
+        message: responseMessages['BAD_REQUEST'][request.language],
+      });
+    }
+  }
+
+  static async depositToBalance(request, response) {
+    try {
+      const { clientId } = request.params;
+      const { amount } = request.body;
+      const client = await Client.findOne({ where: { id: clientId } });
+
+      if (!client)
+        response.status(404).json({
+          message: responseMessages['NOT_FOUND'][request.language],
+        });
+      await client.updateClientBalance({
+        amout: sequelize.literal('amount + ' + amount),
+      });
+      amount;
+      await client.createClientHistory({ amount, actionType: 'DEPOSIT' });
+      return response.status(200).json({
+        message: responseMessages['SUCCESS'][request.language],
+        client,
+      });
+    } catch (error) {
+      return response.status(400).json({
+        message: responseMessages['BAD_REQUEST'][request.language],
+      });
+    }
+  }
+  static async getClientHistory(request, response) {
+    try {
+      const { clientId } = request.params;
+      const client = await Client.findOne({ where: { id: clientId } });
+      if (!client)
+        response.status(404).json({
+          message: responseMessages['NOT_FOUND'][request.language],
+        });
+      const clientHistory = await client.getClientHistory();
+      return response.status(200).json({
+        message: responseMessages['SUCCESS'][request.language],
+        clientHistory,
+      });
+    } catch (error) {
+      return response.status(400).json({
+        message: responseMessages['BAD_REQUEST'][request.language],
+      });
+    }
+  }
 }
 module.exports = ClientController;
 

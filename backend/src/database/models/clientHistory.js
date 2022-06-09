@@ -8,12 +8,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate() {
-      // define association here
+      this.belongsTo(sequelize.models.Client, { foreignKey: 'clientId' });
     }
   }
   clientHistory.init(
     {
-      clientId: DataTypes.NUMBER,
+      clientId: DataTypes.INTEGER,
       actionResult: {
         type: DataTypes.ENUM('INCREASE', 'DECREASE', 'CONSTANT'),
         allowNull: false,
@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValueL: 0,
       },
       actionType: {
-        type: DataTypes.ENUM('DEPOSIT', 'DEDUCT'),
+        type: DataTypes.ENUM('DEPOSIT', 'MEAL_DEDUCTION'),
       },
     },
     {

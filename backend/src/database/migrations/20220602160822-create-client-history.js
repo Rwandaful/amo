@@ -13,16 +13,16 @@ module.exports = {
       },
 
       actionResult: {
-        type: DataTypes.ENUM('INCREASE', 'DECREASE', 'CONSTANT'),
+        type: Sequelize.ENUM('INCREASE', 'DECREASE', 'CONSTANT'),
         allowNull: false,
       },
       amount: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValueL: 0,
       },
       actionType: {
-        type: DataTypes.ENUM('DEPOSIT', 'DEDUCT'),
+        type: Sequelize.ENUM('DEPOSIT', 'DEDUCT'),
       },
       createdAt: {
         allowNull: false,
@@ -35,7 +35,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('clientHistories');
+    await queryInterface.dropTable('client_histories');
   },
 };
 
