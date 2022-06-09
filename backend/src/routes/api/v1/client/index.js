@@ -140,7 +140,7 @@ router.put(
 );
 router.get('/', ClientController.getAllClients);
 router.get('/:clientId', ClientController.getClientById);
-router.use('/clientId/account', require('./account'));
+router.use('/:clientId/account', require('./account'));
 router.delete('/:clientId', ClientController.deleteClient);
 module.exports = router;
 

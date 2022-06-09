@@ -4,7 +4,7 @@ const { responseMessages } = require('../constants');
 class MealController {
   static async createMeal(request, response) {
     try {
-      const { clientId, pricingId, amount } = request.body;
+      const { clientId, pricingId, amount, route } = request.body;
       pricing = await Pricing.findOne({ id: pricingId });
       if (amount && amount != pricing.price) {
         return response.status(400).json({
@@ -30,6 +30,10 @@ class MealController {
         pricingId,
         amount,
       });
+      i(client)
+      client.createClientHistory({
+        
+      })
       return response.status(200).json({
         message: responseMessages['SUCCESS'][request.language],
         meal,
