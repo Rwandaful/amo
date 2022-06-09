@@ -1,13 +1,14 @@
-const Joi = require("joi");
-const client = Joi.object({
-  name: Joi.string().required(),
-  phone: Joi.string(),
-  email: Joi.string(),
-  college: Joi.string(),
-  regno: Joi.string(),
-  class: Joi.string(),
-  hostelName: Joi.string(),
-  hostelBlock: Joi.string(),
-  hostelRoom: Joi.string(),
+const Joi = require('joi');
+const clientValidationSchema = Joi.object({
+  name: Joi.string().required().empty(null),
+  phone: Joi.string().valid('').empty(null),
+  email: Joi.string().valid('').empty(null),
+  college: Joi.string().valid('').empty(null),
+  regno: Joi.string().valid('').empty(null),
+  department: Joi.string().valid('').empty(null),
+  hostelName: Joi.string().valid('').empty(null),
+  hostelBlock: Joi.string().valid('').empty(null),
+  hostelRoom: Joi.string().valid('').empty(null),
 });
-module.exports = { client };
+module.exports = { clientValidationSchema };
+

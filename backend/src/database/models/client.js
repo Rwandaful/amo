@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Client extends Model {
     /**
@@ -7,8 +7,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate() {
       // define association here
+      this.hasOne(sequelize.models.ClientBalance, {
+        foreignKey: 'clientId',
+        as: 'clientBalance',
+      });
+      this.hasMany(sequelize.models.ClientHistory, {
+        foreignKey: 'clientId',
+        as: 'clientHistory',
+      });
     }
   }
   Client.init(
@@ -17,9 +25,8 @@ module.exports = (sequelize, DataTypes) => {
       college: { type: DataTypes.STRING, allowNull: false },
       email: { type: DataTypes.STRING, allowNull: false },
       phone: { type: DataTypes.STRING, allowNull: false },
-      amount: { type: DataTypes.STRING, allowNull: false, defaultValue: 0 },
       regno: { type: DataTypes.STRING, allowNull: true },
-      class: { type: DataTypes.STRING, allowNull: true },
+      department: { type: DataTypes.STRING, allowNull: true },
       hostelName: { type: DataTypes.STRING, allowNull: true },
       hostelBlock: { type: DataTypes.STRING, allowNull: true },
       hostelRoom: { type: DataTypes.STRING, allowNull: true },
@@ -27,9 +34,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Client",
-      tableName: "clients",
+      modelName: 'Client',
+      tableName: 'clients',
     }
   );
   return Client;
 };
+

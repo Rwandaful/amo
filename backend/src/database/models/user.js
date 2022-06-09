@@ -1,5 +1,5 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -21,18 +21,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       role: {
         type: DataTypes.ENUM,
-        values: ["client", "manager", "admin"],
+        values: ['client', 'manager', 'admin'],
       },
     },
     {
       sequelize,
-      modelName: "User",
+      modelName: 'User',
       hooks: {
         beforeValidate: (user, options) => {
-          user.role = user.role || "client";
+          user.role = user.role || 'client';
         },
       },
     }
   );
   return User;
 };
+

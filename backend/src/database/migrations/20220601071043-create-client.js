@@ -1,18 +1,24 @@
-"use strict";
+'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Clients", {
-      name: { type: DataTypes.STRING, allowNull: false },
-      college: { type: DataTypes.STRING, allowNull: false },
-      email: { type: DataTypes.STRING, allowNull: false },
-      phone: { type: DataTypes.STRING, allowNull: false },
-      amount: { type: DataTypes.STRING, allowNull: false, defaultValue: 0 },
-      regno: { type: DataTypes.STRING, allowNull: true },
-      department: { type: DataTypes.STRING, allowNull: true },
-      hostelName: { type: DataTypes.STRING, allowNull: true },
-      hostelBlock: { type: DataTypes.STRING, allowNull: true },
-      hostelRoom: { type: DataTypes.STRING, allowNull: true },
-      profilePicture: { type: DataTypes.STRING, allowNull: true },
+    await queryInterface.createTable('clients', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      name: { type: Sequelize.STRING, allowNull: false },
+      college: { type: Sequelize.STRING, allowNull: false },
+      email: { type: Sequelize.STRING, allowNull: false },
+      phone: { type: Sequelize.STRING, allowNull: false },
+      amount: { type: Sequelize.STRING, allowNull: false, defaultValue: 0 },
+      regno: { type: Sequelize.STRING, allowNull: true },
+      department: { type: Sequelize.STRING, allowNull: true },
+      hostelName: { type: Sequelize.STRING, allowNull: true },
+      hostelBlock: { type: Sequelize.STRING, allowNull: true },
+      hostelRoom: { type: Sequelize.STRING, allowNull: true },
+      profilePicture: { type: Sequelize.STRING, allowNull: true },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
@@ -24,6 +30,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Clients");
+    await queryInterface.dropTable('clients');
   },
 };
+

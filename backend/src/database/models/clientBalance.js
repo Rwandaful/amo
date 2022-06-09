@@ -1,7 +1,5 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class clientBalance extends Model {
     /**
@@ -9,17 +7,21 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate(models) {
+    static associate() {
       // define association here
+      this.belongsTo(sequelize.models.Client, { foreignKey: 'clientId' });
     }
   }
-  clientBalance.init({
-    clientId: DataTypes.NUMBER,
-    type: DataTypes.STRING,
-    amount: DataTypes.NUMBER
-  }, {
-    sequelize,
-    modelName: 'clientBalance',
-  });
+  clientBalance.init(
+    {
+      amount: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'ClientBalance',
+      tableName: 'client_balances',
+    }
+  );
   return clientBalance;
 };
+

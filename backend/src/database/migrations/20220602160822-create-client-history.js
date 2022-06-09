@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("clientHistories", {
+    await queryInterface.createTable('client_histories', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,10 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       clientId: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
-      type: {
-        type: Sequelize.STRING,
+
+      actionResult: {
+        type: Sequelize.ENUM('INCREASE', 'DECREASE', 'CONSTANT'),
+        allowNull: false,
+      },
+      amount: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValueL: 0,
+      },
+      actionType: {
+        type: Sequelize.ENUM('DEPOSIT', 'DEDUCT'),
       },
       createdAt: {
         allowNull: false,
@@ -25,6 +35,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("clientHistories");
+    await queryInterface.dropTable('client_histories');
   },
 };
+

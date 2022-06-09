@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Meals", {
+    await queryInterface.createTable('meals', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,20 +9,20 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       clientId: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: true,
       },
       mealType: {
         type: Sequelize.STRING,
-        enum: ["Breakfast", "Lunch", "Dinner"],
+        enum: ['Breakfast', 'Lunch', 'Dinner'],
       },
       mealPricing: {
         type: Sequelize.STRING,
         enum: [
-          "subscribed-VIP",
-          "subscribed-premium",
-          "onetime-Basic",
-          "onetime-premium",
+          'subscribed-VIP',
+          'subscribed-premium',
+          'onetime-Basic',
+          'onetime-premium',
         ],
         allowNull: false,
       },
@@ -31,7 +31,7 @@ module.exports = {
         allowNull: true,
       },
       price: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -45,6 +45,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Meals");
+    await queryInterface.dropTable('meals');
   },
 };
+

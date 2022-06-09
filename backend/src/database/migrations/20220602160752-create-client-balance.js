@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("clientBalances", {
+    await queryInterface.createTable('client_balances', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       clientId: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
       },
       amount: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 0,
       },
@@ -27,6 +27,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("clientBalances");
+    await queryInterface.dropTable('client_balances');
   },
 };
+
