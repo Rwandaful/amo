@@ -124,7 +124,6 @@ class ClientController {
       await client.updateClientBalance({
         amout: sequelize.literal('amount + ' + amount),
       });
-      amount;
       await client.createClientHistory({ amount, actionType: 'DEPOSIT' });
       return response.status(200).json({
         message: responseMessages['SUCCESS'][request.language],

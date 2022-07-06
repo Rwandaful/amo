@@ -1,5 +1,5 @@
 const { ClientController } = require('../../../../controllers');
-const joiValidator = require('../../../../middlewares/joiValidator');
+const { joiValidator } = require('../../../../middlewares');
 const { multerUploader } = require('../../../../utils/imageUploader');
 const { clientValidationSchema } = require('../../../../validations/client');
 const router = require('express').Router();
@@ -12,22 +12,31 @@ const router = require('express').Router();
  *          properties:
  *              name:
  *                  type: string
+ *                  default: John Doe
  *              college:
  *                  type: string
+ *                  default: CST
  *              email:
  *                  type: string
+ *                  default: john@gmail.com
  *              phone:
  *                  type: string
+ *                  default: 0788400400
  *              department:
  *                  type: string
+ *                  default: Computer engineering
  *              hostelBlock:
  *                  type: string
+ *                  default: Block1
  *              hostelName:
  *                  type: string
+ *                  default: Miseleore
  *              hostelRoom:
  *                  type: string
+ *                  default: M08
  *              regno:
  *                  type: string
+ *                  default: 221000001
  *              profilePicture:
  *                  type: string
  *                  format: binary

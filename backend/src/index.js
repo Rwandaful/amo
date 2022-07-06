@@ -20,7 +20,7 @@ app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
+    // await sequelize.sync();
     console.log('Connection has been established successfully.');
   } catch (error) {
     console.log(error);

@@ -7,8 +7,6 @@ const joiValidator =
         abortEarly: false,
       });
       if (error) {
-        if (request.file) console.log(request.file);
-        if (request.files) console.log(request.files);
         return response.status(400).json({
           errors: error.details.map((err) => ({
             message: err.message,
