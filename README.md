@@ -1,2 +1,2 @@
 # amo
-meal management system
+meal management system using Express and react
